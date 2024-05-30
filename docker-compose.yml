@@ -1,0 +1,59 @@
+version: '3.9'
+
+services:
+  app:
+    container_name: aias_app
+    build:
+      context: .
+    command: >
+     sh -c "python manage.py wait_for_db &&
+            python manage.py migrate &&
+            python manage.py runserver 0.0.0.0:8000"
+    ports:
+      - 8000:8000
+    volumes:
+      - ./app:/app
+      - ./data/web:/vol/web
+ 
+    env_file:
+      - .env
+
+    environment:
+      - SECRET_KEY=devsecretkey
+      - DEBUG=1
+      - DB_HOST=db
+      - DB_NAME=dbaias
+      - DB_USER=dbaias
+      - DB_PASS=changeme
+    
+    networks:
+      - aias_network
+
+    depends_on:
+      - db
+  
+  db:
+    image: postgres:15-alpine
+    container_name: aiasdb
+    restart: always
+    environment:
+      - POSTGRES_DB=dbaias
+      - POSTGRES_USER=dbaias
+      - POSTGRES_PASSWORD=changeme
+    volumes:
+      - pgdata:/var/lib/postgresql/data/
+    env_file:
+      - .env
+
+    ports:
+      - 5432:5432
+    networks:
+      - aias_network
+  
+networks:
+  aias_network:
+    driver: bridge
+
+volumes:
+  pgdata:
+
