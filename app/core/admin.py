@@ -4,12 +4,13 @@ from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.utils.translation import gettext as _
 from import_export.admin import ImportExportMixin
 from riskmanagement.models import (
-     Department, EnvironmentalFactor, RisksAndImpact, Arias, LegalRequirementControl,
-     ContactPerson, Subproject, EnvironmentalSocialRisk, ConsultationEngagement,
-     ProposedAction, ScreeningResult, Activity, Proponent, Location, ActivityDescription,
-     LandOwnership, AlternativeLocations, EnvironmentalSituation, Investment
+     Department, EnvironmentalFactor, RisksAndImpact, LegalRequirementControl,
+     ResponsibleForFillingForm, ResponsibleForVerification, Subproject,
+     EnvironmentalSocialScreening, EnvironAndSocialRiskAndImapactAssessement,
+     ScreeningResult, BiodeversidadeRecursosNaturais,
+     PreliminaryEnvironmentalInformation
 )
-                                   
+from riskmanagement.forms import EnvironmentalSocialScreeningForm                                   
 
 class UserAdmin(BaseUserAdmin):
     ordering = ['id']
@@ -32,14 +33,18 @@ class UserAdmin(BaseUserAdmin):
 
 class DepartmentAdmin(ImportExportMixin, admin.ModelAdmin):
     list_display = ['id', 'name', 'description']
+    sortable_by = ['id']
 
 class EnvironmentalFactorAdmin(ImportExportMixin, admin.ModelAdmin):
     list_display = ['id', 'description']
+    sortable_by = ['id']
+    
 
 class RisksAndImpactAdmin(ImportExportMixin, admin.ModelAdmin):
     list_display = ['id', 'description',]
+    sortable_by = ['id']
 
-class AriasAdmin(ImportExportMixin, admin.ModelAdmin):
+class EnvironAndSocialRiskAndImapactAssessementAdmin(ImportExportMixin, admin.ModelAdmin):
     list_display = [
         'id',
         'departament',
@@ -63,9 +68,11 @@ class AriasAdmin(ImportExportMixin, admin.ModelAdmin):
         'created_at',
     
     ]
+    sortable_by = ['id']
 
 class LegalRequirementControlAdmin(ImportExportMixin, admin.ModelAdmin):
     list_display = [
+        'id',
         'number',
         'document_title',
         'effective_date',
@@ -76,8 +83,8 @@ class LegalRequirementControlAdmin(ImportExportMixin, admin.ModelAdmin):
         'updated_at',
         'law_file',
     ]
-
-class ContactPersonAdmin(ImportExportMixin, admin.ModelAdmin):
+    sortable_by = ['id']
+class ResponsibleFoFillingAdmin(ImportExportMixin, admin.ModelAdmin):
     list_display = [
         'name',
         'role',
@@ -85,6 +92,16 @@ class ContactPersonAdmin(ImportExportMixin, admin.ModelAdmin):
         'date',
         'signature',
     ]
+    sortable_by = ['name']
+class ResponsibleForVerificationAdmin(ImportExportMixin, admin.ModelAdmin):
+    list_display = [
+        'name',
+        'role',
+        'contact',
+        'date',
+        'signature',
+    ]
+    sortable_by = ['name']
 
 class SubprojectAdmin(ImportExportMixin, admin.ModelAdmin):
     list_display = [
@@ -97,15 +114,29 @@ class SubprojectAdmin(ImportExportMixin, admin.ModelAdmin):
         'type',
         'approximate_area',
     ]
+    sortable_by = ['name']
 
-class EnvironmentalSocialRiskAdmin(ImportExportMixin, admin.ModelAdmin):
+class BiodeversidadeRecursosNaturaisAdmin(ImportExportMixin, admin.ModelAdmin):
     list_display = [
-        'subproject',
+        'id',
         'reference',
         'description',
+    ]
+    sortable_by = ['id']
+class EnvironmentalSocialScreeningAdmin(ImportExportMixin, admin.ModelAdmin):
+    form = EnvironmentalSocialScreeningForm
+    list_display = [
+        'subproject',
+        'biodiversidade_recursos_naturais',
         'response',
         'relevant_standard',
     ]
+
+    def get_form(self, request, obj=None, **kwargs):
+        form = super().get_form(request, obj, **kwargs)
+        form.base_fields['recomended_actions'].disabled = True
+        return form
+    
 
 class ConsultationEngagementAdmin(ImportExportMixin, admin.ModelAdmin):
     list_display = [
@@ -126,74 +157,14 @@ class ScreeningResultAdmin(ImportExportMixin, admin.ModelAdmin):
         'risk_category',
         'description',
     ]
-class ActivityAdmin(ImportExportMixin, admin.ModelAdmin):
+
+class PreliminaryEnvironmentalInformationAdmin(ImportExportMixin, admin.ModelAdmin):
     list_display = [
-        'name',
+        'activity_name',
         'activity_type',
         'other_activity_type',
         'development_stage',
-        'other_development_stage',
-
-    ]
-class ProponentAdmin(ImportExportMixin, admin.ModelAdmin):
-    list_display = [
-        'activity',
-        'name',
-        'address',
-        'telephone',
-        'fax',
-        'mobile',
-        'email',
-    ]
-
-class LocationAdmin(ImportExportMixin, admin.ModelAdmin):
-    list_display = [
-        'activity',
-        'neighborhood',
-        'province',
-        'district',
-        'city',
-        'geographic_coordinates',
-    ]
-
-class ActivityDescriptionAdmin(ImportExportMixin, admin.ModelAdmin):
-    list_display = [
-        'activity',
-        'infrastructure',
-        'associated_activities',
-        'construction_technology',
-        'main_complementary_activities',
-        'labor_type_quantity',
-        'raw_materials_type_quantity',
-        'chemicals_used',
-        'water_energy_consumption',
-        'fuels_lubricants',
-        'other_resources',
-    ]
-
-class LandOwnershipAdmin(ImportExportMixin, admin.ModelAdmin):
-    list_display = [
-        'activity',
-        'legal_status',
-    ]
-
-class AlternativeLocationsAdmin(ImportExportMixin, admin.ModelAdmin):
-    list_display = [
-        'activity',
-        'reason_for_choice',
-        'alternative1',
-        'alternative2',
-    ]
-
-class EnvironmentalSituationAdmin(ImportExportMixin, admin.ModelAdmin):
-    list_display = [
-        'activity',
-        'physical_characteristics',
-        'predominant_ecosystems',
-        'location_zone',
-        'predominant_vegetation',
-        'land_use',
-        'existing_infrastructure',
+        'other_development_stage'
     ]
 
 
@@ -201,20 +172,14 @@ admin.site.register(User, UserAdmin)
 admin.site.register(Department, DepartmentAdmin)
 admin.site.register(EnvironmentalFactor, EnvironmentalFactorAdmin)
 admin.site.register(RisksAndImpact, RisksAndImpactAdmin)
-admin.site.register(Arias, AriasAdmin)
+admin.site.register(EnvironAndSocialRiskAndImapactAssessement, EnvironAndSocialRiskAndImapactAssessementAdmin)
 admin.site.register(LegalRequirementControl, LegalRequirementControlAdmin)
-admin.site.register(ContactPerson, ContactPersonAdmin)
+admin.site.register(ResponsibleForFillingForm, ResponsibleFoFillingAdmin)
+admin.site.register(ResponsibleForVerification, ResponsibleForVerificationAdmin)
 admin.site.register(Subproject, SubprojectAdmin)
-admin.site.register(EnvironmentalSocialRisk, EnvironmentalSocialRiskAdmin)
-admin.site.register(ConsultationEngagement, ConsultationEngagementAdmin)
-admin.site.register(ProposedAction, ProposedActionAdmin)
+admin.site.register(EnvironmentalSocialScreening, EnvironmentalSocialScreeningAdmin)
 admin.site.register(ScreeningResult, ScreeningResultAdmin)
-admin.site.register(Activity, ActivityAdmin)
-admin.site.register(Proponent, ProponentAdmin)
-admin.site.register(Location, LocationAdmin)
-admin.site.register(ActivityDescription, ActivityDescriptionAdmin)
-admin.site.register(LandOwnership, LandOwnershipAdmin)
-admin.site.register(AlternativeLocations, AlternativeLocationsAdmin)
-admin.site.register(EnvironmentalSituation, EnvironmentalSituationAdmin)
+admin.site.register(BiodeversidadeRecursosNaturais, BiodeversidadeRecursosNaturaisAdmin)
+admin.site.register(PreliminaryEnvironmentalInformation, PreliminaryEnvironmentalInformationAdmin)
 
 admin.site.site_header = 'SGAS - Sistema de gestão ambiental e social'
