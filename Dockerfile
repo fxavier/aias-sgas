@@ -7,6 +7,12 @@ ENV PYTHONUNBUFFERED 1
 
 # Copying requirements first to leverage Docker cache
 COPY ./requirements.txt /requirements.txt
+COPY ./app /app
+COPY ./scripts /scripts
+
+WORKDIR /app
+
+EXPOSE 8000
 
 # Install dependencies in a single RUN command to reduce layers
 RUN python -m venv /py && \
@@ -35,14 +41,13 @@ RUN python -m venv /py && \
 RUN mkdir -p /vol/web/static /vol/web/media && \
     chown -R app:app /vol && \
     chmod -R 755 /vol/web && \
-    chmod -R 777 /py/*
+    chmod -R 777 /py/* && \
+    chmod +x /scripts/*
 
-COPY ./app /app
 
-WORKDIR /app
-
-EXPOSE 8000
-
-ENV PATH="/py/bin:$PATH"
+#ENV PATH="/py/bin:$PATH"
+ENV PATH="/scripts:/py/bin:$PATH"
 
 USER app
+
+CMD ["run.sh"]
