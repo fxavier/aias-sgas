@@ -134,7 +134,7 @@ class EnvironmentalSocialScreeningAdmin(ImportExportMixin, admin.ModelAdmin):
 
     def get_form(self, request, obj=None, **kwargs):
         form = super().get_form(request, obj, **kwargs)
-        form.base_fields['recomended_actions'].disabled = True
+        form.base_fields['recomended_actions'].hidden = True
         return form
     
 

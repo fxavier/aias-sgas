@@ -1,7 +1,10 @@
 from django.db import models
 from users.models import User
-from core.utils.utils import law_file_path
+#from core.utils.utils import law_file_path
 
+ 
+def law_file_path(instance, filename):
+    return f'law_files/{instance.number}/{filename}'
 
 
 class Department(models.Model):
@@ -113,6 +116,7 @@ class LegalRequirementControl(models.Model):
 
     def __str__(self):
         return self.document_title
+   
     
     class Meta:
         verbose_name = 'Legal Requirement Control (FR.AS.003)'

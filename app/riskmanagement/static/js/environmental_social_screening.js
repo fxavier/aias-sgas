@@ -4,9 +4,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function toggleRecommendedActions() {
         if (responseField.value === 'SIM') {
-            recommendedActionsField.disabled = false;
+            recommendedActionsField.hidden = false;
         } else {
-            recommendedActionsField.disabled = true;
+            recommendedActionsField.hidden = true;
         }
     }
 
