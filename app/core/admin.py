@@ -10,7 +10,12 @@ from riskmanagement.models import (
      ScreeningResult, BiodeversidadeRecursosNaturais,
      PreliminaryEnvironmentalInformation
 )
-from riskmanagement.forms import EnvironmentalSocialScreeningForm                                   
+from riskmanagement.forms import EnvironmentalSocialScreeningForm   
+from extcommungrievancemechanism.forms import ComplaintAndClaimRecordForm
+from extcommungrievancemechanism.models import (
+    ClaimNonComplianceControl, ComplaintAndClaimRecord, PhotoDocumentProvingClosure,
+    ClaimComplainControl
+)                                
 
 class UserAdmin(BaseUserAdmin):
     ordering = ['id']
@@ -167,6 +172,53 @@ class PreliminaryEnvironmentalInformationAdmin(ImportExportMixin, admin.ModelAdm
         'other_development_stage'
     ]
 
+class ClaimNonComplianceControlAdmin(ImportExportMixin, admin.ModelAdmin):
+    list_display = [ 
+        'number',
+        'department',
+        'non_compliance_description',
+        'identified_causes',
+        'corrective_actions',
+        'responsible_person',
+        'deadline',
+        'status',
+        'effectiveness_evaluation',
+        'responsible_person_evaluation',
+        'observation'
+    ]
+
+class ComplaintAndClaimAdmin(ImportExportMixin, admin.ModelAdmin):
+    form = ComplaintAndClaimRecordForm
+    list_display = [
+        'number',
+        'date_occurred',
+        'local_occurrence',
+        'how_occurred',
+        'who_involved',
+        'report_and_explanation',
+        'claim_local_occurrence'
+    ]
+
+    def get_form(self, request, obj=None, **kwargs):
+        form = super().get_form(request, obj, **kwargs)
+        form.base_fields['action_taken'].hidden = True
+        form.base_fields['notification_method'].hidden = True
+        form.base_fields['other_claim_category'].hidden = True
+        return form
+
+class ClaimComplainControlAdmin(ImportExportMixin, admin.ModelAdmin):
+    list_display = [
+        'number',
+        'claim_complain_submitted_by',
+        'claim_complain_reception_date',
+        'claim_complain_description',
+        'treatment_action',
+        'claim_complain_responsible_person',
+        'claim_complain_deadline',
+        'claim_complain_status',
+        'closure_date',
+        'observation'
+    ]
 
 admin.site.register(User, UserAdmin)
 admin.site.register(Department, DepartmentAdmin)
@@ -181,5 +233,9 @@ admin.site.register(EnvironmentalSocialScreening, EnvironmentalSocialScreeningAd
 admin.site.register(ScreeningResult, ScreeningResultAdmin)
 admin.site.register(BiodeversidadeRecursosNaturais, BiodeversidadeRecursosNaturaisAdmin)
 admin.site.register(PreliminaryEnvironmentalInformation, PreliminaryEnvironmentalInformationAdmin)
+admin.site.register(ClaimNonComplianceControl, ClaimNonComplianceControlAdmin)
+admin.site.register(ComplaintAndClaimRecord, ComplaintAndClaimAdmin)
+admin.site.register(PhotoDocumentProvingClosure)
+admin.site.register(ClaimComplainControl, ClaimComplainControlAdmin)
 
 admin.site.site_header = 'SGAS - Sistema de gestão ambiental e social'

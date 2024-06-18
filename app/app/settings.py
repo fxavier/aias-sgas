@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     'core',
     'users',
     'riskmanagement',
+    'extcommungrievancemechanism',
     # 'tailwind',
     # 'sweetify',
 ]
