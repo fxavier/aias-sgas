@@ -39,7 +39,7 @@ RUN python -m venv /py && \
 
 # Setting up application directories
 RUN mkdir -p /vol/web/static /vol/web/media && \
-    chown -R app:app /vol && \
+    chown -R app:app /vol /app && \
     chmod -R 755 /vol/web && \
     chmod -R 777 /py/* && \
     chmod +x /scripts/*
