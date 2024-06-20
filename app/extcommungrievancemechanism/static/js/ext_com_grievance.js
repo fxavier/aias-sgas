@@ -1,12 +1,15 @@
 document.addEventListener('DOMContentLoaded', function() {
     const complaintAccepted = document.querySelector('#id_complaintant_accepted');
     const actionTaken = document.querySelector('#id_action_taken');
+    const actionTakenLabel = document.querySelector('label[for="id_action_taken"]');
 
     function toggleActionsTaken() {
         if (complaintAccepted.value === 'YES') {
             actionTaken.hidden = false;
+            actionTakenLabel.hidden = false;
         } else {
             actionTaken.hidden = true;
+            actionTakenLabel.hidden = true;
         }
     }
 

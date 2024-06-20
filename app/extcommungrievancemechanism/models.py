@@ -32,8 +32,8 @@ class ClaimNonComplianceControl(models.Model):
   
     class Meta:
         db_table = 'claim_non_compliance_control'
-        verbose_name = 'Complaints Claims Non Compliance Control'
-        verbose_name_plural = 'Complaints Claims Non Compliance Controls'
+        verbose_name = 'Non Compliance Control'
+        verbose_name_plural = 'Non Compliance Controls'
 
     def __str__(self):
         return f'{self.claim} - {self.non_compliance_control}'
@@ -54,8 +54,8 @@ class ClaimComplainControl(models.Model):
 
     class Meta:
         db_table = 'claim_complain_control'
-        verbose_name = 'Claim Complain and Non Compliance Control'
-        verbose_name_plural = 'Claim Complain and Non Compliance Controls'
+        verbose_name = 'Claim And Complain Control'
+        verbose_name_plural = 'Claim And Complain Controls'
 
     def __str__(self):
         return f'{self.number} - {self.claim_complain_submitted_by}'
