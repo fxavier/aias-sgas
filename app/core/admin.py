@@ -15,7 +15,13 @@ from extcommungrievancemechanism.forms import ComplaintAndClaimRecordForm
 from extcommungrievancemechanism.models import (
     ClaimNonComplianceControl, ComplaintAndClaimRecord, PhotoDocumentProvingClosure,
     ClaimComplainControl
-)                                
+)   
+
+from emergencyresponse.models import (
+    PessoaEnvolvida, PessoasEnvolvidasNaInvestigacao,
+    AccoesImediatasECorrectivas, RelatorioAcidenteIncidente,
+    ListaVerificacaoKitPrimeirosSocorros
+)
 
 class UserAdmin(BaseUserAdmin):
     ordering = ['id']
@@ -220,6 +226,55 @@ class ClaimComplainControlAdmin(ImportExportMixin, admin.ModelAdmin):
         'observation'
     ]
 
+class PessoaEnvolvidaAdmin(ImportExportMixin, admin.ModelAdmin):
+    list_display = [
+        'nome',
+        'departamento',
+        'outras_informacoes',
+    ]
+
+class PessoasEnvolvidasNaInvestigacaoAdmin(ImportExportMixin, admin.ModelAdmin):
+    list_display = [
+        'nome',
+        'empresa',
+        'actividade',
+        'assinatura',
+        'data',
+    ]
+
+class AccoesImediatasECorrectivasAdmin(ImportExportMixin, admin.ModelAdmin):
+    list_display = [
+        'accao',
+        'descricao',
+        'responsavel',
+        'data',
+        'assinatura',
+    ]
+
+class RelatorioAcidenteIncidenteAdmin(ImportExportMixin, admin.ModelAdmin):
+    list_display = [
+        'nome',
+        'funcao',
+        'departamento',
+        'data',
+        'hora',
+        'local',
+        'actividade_em_curso',
+        'descricao_do_acidente',
+        'tipo_de_incidente',
+    ] 
+
+class ListaVerificacaoKitPrimeirosSocorrosAdmin(ImportExportMixin, admin.ModelAdmin):
+    list_display = [
+        'descricao',
+        'quantidade',
+        'data',
+        'prazo',
+        'observacao',
+        'inspecao_realizada_por',
+       
+    ]
+
 admin.site.register(User, UserAdmin)
 admin.site.register(Department, DepartmentAdmin)
 admin.site.register(EnvironmentalFactor, EnvironmentalFactorAdmin)
@@ -237,5 +292,11 @@ admin.site.register(ClaimNonComplianceControl, ClaimNonComplianceControlAdmin)
 admin.site.register(ComplaintAndClaimRecord, ComplaintAndClaimAdmin)
 admin.site.register(PhotoDocumentProvingClosure)
 admin.site.register(ClaimComplainControl, ClaimComplainControlAdmin)
+admin.site.register(PessoaEnvolvida, PessoaEnvolvidaAdmin)
+admin.site.register(PessoasEnvolvidasNaInvestigacao, PessoasEnvolvidasNaInvestigacaoAdmin)
+admin.site.register(AccoesImediatasECorrectivas, AccoesImediatasECorrectivasAdmin)
+admin.site.register(RelatorioAcidenteIncidente, RelatorioAcidenteIncidenteAdmin)
+admin.site.register(ListaVerificacaoKitPrimeirosSocorros, ListaVerificacaoKitPrimeirosSocorrosAdmin)
+
 
 admin.site.site_header = 'SGAS - Sistema de gestão ambiental e social'
