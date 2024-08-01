@@ -184,3 +184,140 @@ class ListaVerificacaoKitPrimeirosSocorros(models.Model):
 
     def __str__(self):
         return self.descricao
+
+
+class Incidents(models.Model):
+    description = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.description
+    
+class Type(models.TextChoices):
+    Employee = 'Employee'
+    SubContrator = 'Subcontrator'
+
+class FurtherInvestigatioRequired(models.TextChoices):
+    Yes = 'Yes'
+    No = 'No'
+
+
+    
+class IncidentFlashReport(models.Model):
+    incidents = models.ManyToManyField(Incidents)
+    date_incident = models.DateField()
+    time_incident = models.TimeField()
+    section = models.CharField(max_length=100, null=True, blank=True)
+    location_incident = models.CharField(max_length=255)
+    date_reported = models.DateField()
+    supervisor = models.CharField(max_length=100)
+    type = models.CharField(max_length=100, choices=Type.choices)
+    employee_name = models.CharField(max_length=100, null=True, blank=True)
+    subcontrator_name = models.CharField(max_length=100, null=True, blank=True)
+    incident_description = models.TextField()
+    details_of_injured_person = models.TextField()
+    witness_statement = models.TextField(null=True, blank=True)
+    preliminary_findings = models.CharField(max_length=255, null=True, blank=True)
+    recomendations = models.TextField()
+    further_investigation_required = models.CharField(max_length=100, choices=FurtherInvestigatioRequired.choices)
+    incident_reportable = models.CharField(max_length=100, choices=FurtherInvestigatioRequired.choices)
+    lenders_to_be_notified = models.CharField(max_length=100, choices=FurtherInvestigatioRequired.choices)
+    author_of_report = models.CharField(max_length=10)
+    date_created = models.DateField(auto_now_add=True)
+    approver_name = models.CharField(max_length=100)
+    date_approved = models.DateField()
+    
+
+    class Meta:
+        verbose_name = 'Incident Flash Report (FR.AS.028)'
+        verbose_name_plural = 'Incident Flash Reports (FR.AS.028)'
+
+    def __str__(self):  
+        return self.location_incident
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

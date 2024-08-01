@@ -1,4 +1,7 @@
 import {
+  BreakpointObserver
+} from "./chunk-XLRJ3JNW.js";
+import {
   A,
   ALT,
   BidiModule,
@@ -21,10 +24,7 @@ import {
   Z,
   ZERO,
   hasModifierKey
-} from "./chunk-MVYBSZ2W.js";
-import {
-  BreakpointObserver
-} from "./chunk-XLRJ3JNW.js";
+} from "./chunk-HN7ZVCGL.js";
 import {
   coerceBooleanProperty,
   coerceElement,
@@ -4637,4 +4637,4 @@ export {
   MatRippleLoader,
   _MatInternalFormField
 };
-//# sourceMappingURL=chunk-XIDB4L4T.js.map
+//# sourceMappingURL=chunk-YGBN4JTW.js.map

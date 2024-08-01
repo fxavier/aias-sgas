@@ -57,6 +57,11 @@ INSTALLED_APPS = [
     'riskmanagement',
     'extcommungrievancemechanism',
     'emergencyresponse',
+    'documentmanagement',
+    'programsmanagement',
+    'organizationalcapacityandcompetency',
+    'reportingmonitoringandreview',
+    'resourceefficiencyandpollutionprevention',
     # 'tailwind',
     # 'sweetify',
 ]

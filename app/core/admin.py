@@ -8,19 +8,37 @@ from riskmanagement.models import (
      ResponsibleForFillingForm, ResponsibleForVerification, Subproject,
      EnvironmentalSocialScreening, EnvironAndSocialRiskAndImapactAssessement,
      ScreeningResult, BiodeversidadeRecursosNaturais,
-     PreliminaryEnvironmentalInformation
+     PreliminaryEnvironmentalInformation, EmbeddedMitigation, PlanningOrConstructionPhase
 )
 from riskmanagement.forms import EnvironmentalSocialScreeningForm   
 from extcommungrievancemechanism.forms import ComplaintAndClaimRecordForm
 from extcommungrievancemechanism.models import (
     ClaimNonComplianceControl, ComplaintAndClaimRecord, PhotoDocumentProvingClosure,
-    ClaimComplainControl
+    ClaimComplainControl, WorkerGrievance
 )   
 
 from emergencyresponse.models import (
     PessoaEnvolvida, PessoasEnvolvidasNaInvestigacao,
     AccoesImediatasECorrectivas, RelatorioAcidenteIncidente,
-    ListaVerificacaoKitPrimeirosSocorros
+    ListaVerificacaoKitPrimeirosSocorros, Incidents, IncidentFlashReport
+)
+
+from documentmanagement.models import DocumentType, Document
+
+from programsmanagement.models import StrategicObjective, SpecificObjective
+
+from organizationalcapacityandcompetency.models import (
+    TrainingNeeds, TrainingPlan, TrainingEffectivnessAssessment,
+    TrainingEvaluationQuestions, Position, Training, ToolBoxTalks, TrainingMatrix,
+    AcceptanceConfirmation, OHSACTING
+)
+
+from reportingmonitoringandreview.models import (
+    WasteTransferLog
+)
+
+from resourceefficiencyandpollutionprevention.models import (
+    WastManagement
 )
 
 class UserAdmin(BaseUserAdmin):
@@ -275,6 +293,212 @@ class ListaVerificacaoKitPrimeirosSocorrosAdmin(ImportExportMixin, admin.ModelAd
        
     ]
 
+class DocumentTypeAdmin(ImportExportMixin, admin.ModelAdmin):
+    list_display = [
+        'description',
+    ]
+
+class DocumentAdmin(ImportExportMixin, admin.ModelAdmin):
+    list_display = [
+        'code',
+        'creation_date',
+        'revision_date',
+        'document_name',
+        'document_type',
+        'document_path',
+        'document_state',
+        'retention_period',
+        'disposal_method',
+        'observation',
+        'created_by',
+    ]
+
+class WorkerGrievanceAdmin(ImportExportMixin, admin.ModelAdmin):
+    list_display = [
+        'name',
+        'company',
+        'date',
+        'prefered_contact_method',
+        'contact',
+        'grievance_details', 
+    ]
+
+class StrategicObjectiveAdmin(ImportExportMixin, admin.ModelAdmin):
+    list_display = [
+        'description',
+        'goals',
+        'strategies_for_achievement',
+    ]
+
+class SpecificObjectiveAdmin(ImportExportMixin, admin.ModelAdmin):
+    list_display = [
+        'strategic_objective',
+        'specific_objective',
+        'actions_for_achievement',
+        'responsible_person',
+        'necessary_resources',
+        'indicator',
+        'goal',
+        'monitoring_frequency',
+        'deadline',
+        'observation',
+    ]
+
+class TrainingNeedsAdmin(ImportExportMixin, admin.ModelAdmin):
+    list_display = [
+    'filled_by',
+    'date',
+    'department',
+    'training',
+    'training_objective',
+    'proposal_of_training_entity',
+    'potential_training_participants',
+    ]
+
+class TrainingPlanAdmin(ImportExportMixin, admin.ModelAdmin):
+    list_display = [
+        'updated_by',
+        'date',
+        'year',
+        'training_area',
+        'training_title',
+        'training_objective',
+        'training_type',
+        'training_entity',
+        'duration',
+        'number_of_trainees',
+        'training_recipients',
+        'training_month',
+        'training_status',
+        'observations',
+    ]
+
+class TrainingEffectivnessAssessmentAdmin(ImportExportMixin, admin.ModelAdmin):
+    list_display = [
+        'training',
+        'date',
+        'department',
+        'trainee',
+        'immediate_supervisor',
+        'training_evaluation_question',
+        'answer',
+        'human_resource_evaluation',
+    ]
+
+class TrainingEvaluationQuetionAdmin(ImportExportMixin, admin.ModelAdmin):
+    list_display = [
+        'question',
+    ]
+
+class PositionAdmin(ImportExportMixin, admin.ModelAdmin):
+    list_display = [
+        'id',
+        'name',
+    ]
+
+class TrainingAdmin(ImportExportMixin, admin.ModelAdmin):
+    list_display = [
+        'id',
+        'name',
+    ]
+
+class ToolBoxTalksAdmin(ImportExportMixin, admin.ModelAdmin):
+    list_display = [
+        'id',
+        'name',
+    ]
+
+class TrainingMatrixAdmin(ImportExportMixin, admin.ModelAdmin):
+    list_display = [
+        'date',
+        'position',
+        'training',
+        'toolbox_talks',
+        'effectiveness',
+        'actions_training_not_effective',
+    ]
+
+class AcceptanceConfirmationAdmin(ImportExportMixin, admin.ModelAdmin):
+    list_display = [
+        'description',
+    ]
+
+class OHSACTINGAdmin(ImportExportMixin, admin.ModelAdmin):
+    list_display = [
+        'fullname',
+        'designation',
+        'terms_of_office_from',
+        'terms_of_office_to',
+        'acceptance_confirmation_display',
+    ]
+
+    def acceptance_confirmation_display(self, obj):
+        return ", ".join([str(item) for item in obj.acceptance_confirmation.all()])
+    acceptance_confirmation_display.short_description = 'Acceptance Confirmation'
+
+class IncidentsAdmin(ImportExportMixin, admin.ModelAdmin):
+    list_display = [
+        'id',
+        'description'
+    ]
+
+class IncidentFlashReportAdmin(ImportExportMixin, admin.ModelAdmin):
+    list_display = [
+        'incidents_display',
+        'date_incident',
+        'time_incident',
+        'section',
+        'location_incident',
+        'date_reported'
+    ]
+
+    def incidents_display(self, obj):
+        return ", ".join([str(item) for item in obj.incidents.all()])
+    incidents_display.short_description = 'Incidents'
+
+class EmbeddedMitigationAdmin(ImportExportMixin, admin.ModelAdmin):
+    list_display = [
+       'item_number',
+       'issue',
+       'potential_impact_managed',
+       'mitigation_measure',
+       'timing',
+       'responsibility_for_implementation',
+       'means_of_verification'
+    ]
+
+class PlanningOrConstructionPhaseAdmin(ImportExportMixin, admin.ModelAdmin):
+    list_display = [
+        'item_number',
+        'issue',
+        'potential_impact_managed',
+        'mitigation_measure',
+        'timing',
+        'responsibility_for_implementation',
+        'means_of_verification'
+    ]
+
+class WasteTranferLogAdmin(ImportExportMixin, admin.ModelAdmin):
+    list_display = [
+        'waste_type',
+        'how_is_waste_contained',
+        'how_much_waste',
+        'reference_number',
+        'date_of_removal',
+        'transfer_company',
+        'special_instructions'
+    ]
+
+class WasteManagementadmin(ImportExportMixin, admin.ModelAdmin):
+    list_display = [
+        'waste_route',
+        'labelling',
+        'storage',
+        'transportation_company_method',
+        'disposal_company',
+        'special_instructions'
+    ]
+
 admin.site.register(User, UserAdmin)
 admin.site.register(Department, DepartmentAdmin)
 admin.site.register(EnvironmentalFactor, EnvironmentalFactorAdmin)
@@ -297,6 +521,27 @@ admin.site.register(PessoasEnvolvidasNaInvestigacao, PessoasEnvolvidasNaInvestig
 admin.site.register(AccoesImediatasECorrectivas, AccoesImediatasECorrectivasAdmin)
 admin.site.register(RelatorioAcidenteIncidente, RelatorioAcidenteIncidenteAdmin)
 admin.site.register(ListaVerificacaoKitPrimeirosSocorros, ListaVerificacaoKitPrimeirosSocorrosAdmin)
+admin.site.register(DocumentType, DocumentTypeAdmin)
+admin.site.register(Document, DocumentAdmin)
+admin.site.register(WorkerGrievance, WorkerGrievanceAdmin)
+admin.site.register(StrategicObjective, StrategicObjectiveAdmin)
+admin.site.register(SpecificObjective, SpecificObjectiveAdmin)
+admin.site.register(TrainingNeeds, TrainingNeedsAdmin)
+admin.site.register(TrainingPlan, TrainingPlanAdmin)
+admin.site.register(TrainingEffectivnessAssessment, TrainingEffectivnessAssessmentAdmin)
+admin.site.register(TrainingEvaluationQuestions, TrainingEvaluationQuetionAdmin)
+admin.site.register(Position, PositionAdmin)
+admin.site.register(Training, TrainingAdmin)
+admin.site.register(ToolBoxTalks, ToolBoxTalksAdmin)
+admin.site.register(TrainingMatrix, TrainingMatrixAdmin)
+admin.site.register(AcceptanceConfirmation, AcceptanceConfirmationAdmin)
+admin.site.register(OHSACTING, OHSACTINGAdmin)
+admin.site.register(Incidents, IncidentsAdmin)
+admin.site.register(IncidentFlashReport, IncidentFlashReportAdmin)
+admin.site.register(EmbeddedMitigation, EmbeddedMitigationAdmin)
+admin.site.register(PlanningOrConstructionPhase, PlanningOrConstructionPhaseAdmin)
+admin.site.register(WasteTransferLog, WasteTranferLogAdmin)
+admin.site.register(WastManagement, WasteManagementadmin)
 
 
 admin.site.site_header = 'SGAS - Sistema de gestão ambiental e social'

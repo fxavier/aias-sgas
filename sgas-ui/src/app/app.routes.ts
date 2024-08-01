@@ -78,6 +78,7 @@ export const appRoutes: Route[] = [
             {path: 'example', loadChildren: () => import('app/modules/admin/example/example.routes')},
             {path: 'data-entry', loadChildren: () => import('app/modules/admin/data-entry/data-entry.routes')},
             {path: 'add-department', loadChildren: () => import('app/modules/admin/riskmanagement/departments/add-department/add-department.routes')},
+            {path: 'list-department', loadChildren: () => import('app/modules/admin/riskmanagement/departments/list-department/list-department.routes')}
         ]
     },
 
@@ -92,6 +93,7 @@ export const appRoutes: Route[] = [
         },
         children: [
             {path: 'exemplo', loadChildren: () => import('app/modules/apps/exemplo/exemplo.routes')},
+            {path: 'add-env-social-risk-impact-assessement', loadChildren: () => import('app/modules/apps/risk-management/add-social-risk-impact-assement.routes')}
         ]
     }
 ];

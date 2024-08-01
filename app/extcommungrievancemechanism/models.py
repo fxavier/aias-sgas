@@ -79,6 +79,7 @@ class ClaimCategory(models.TextChoices):
     Company_vehicles = 'Company vehicles', 'Company vehicles'
     Flow_of_migrant_workers = 'Flow of migrant workers', 'Flow of migrant workers'
     Security_personnel = 'Security personnel', 'Security personnel'
+    gbv = "GBV/SA/SEA"
     Other = 'Other', 'Other'
 
 class CollectedInformation(models.TextChoices):
@@ -165,5 +166,45 @@ class ComplaintAndClaimRecord(models.Model):
 
     def __str__(self):
         return f'{self.number} - {self.department}'
+    
+
+#Worker Grievance
+
+class PreferedContactMethod(models.TextChoices):
+    EMAIL = 'EMAIL', 'Email'
+    PHONE = 'PHONE', 'Phone'
+    FACE_TO_FACE = 'FACE_TO_FACE', 'Face to Face'
 
 
+class PreferedLanguage(models.TextChoices):
+    PORTUGUESE = 'PORTUGUESE', 'Portuguese'
+    ENGLISH = 'ENGLISH', 'English'
+    OTHER = 'OTHER', 'Other'
+
+
+class WorkerGrievance(models.Model):
+    name = models.CharField(max_length=100)
+    company = models.CharField(max_length=100)
+    date = models.DateField()
+    prefered_contact_method = models.CharField(max_length=50, choices=PreferedContactMethod.choices)
+    contact = models.CharField(max_length=100)
+    prefered_language = models.CharField(max_length=50, choices=PreferedLanguage.choices)
+    other_language = models.CharField(max_length=100, null=True, blank=True)
+    grievance_details = models.TextField()
+    unique_identification_of_company_acknowlegement = models.CharField(max_length=100)
+    name_of_person_acknowledging_grievance = models.CharField(max_length=100)
+    position_of_person_acknowledging_grievance = models.CharField(max_length=100)
+    date_of_acknowledgement = models.DateField()
+    signature_of_person_acknowledging_grievance = models.CharField(max_length=100)
+    follow_up_details = models.TextField()
+    closed_out_date = models.DateField()
+    signature_of_response_corrective_action_person = models.CharField(max_length=100)
+    acknowledge_receipt_of_response = models.CharField(max_length=100)
+    name_of_person_acknowledging_response = models.CharField(max_length=100)
+    signature_of_person_acknowledging_response = models.CharField(max_length=100)
+    date_of_acknowledgement_response = models.DateField()
+
+
+    class Meta:
+        verbose_name = 'Worker Grievance (FR.AS.033)'
+        verbose_name_plural = 'Worker Grievances (FR.AS.033)'

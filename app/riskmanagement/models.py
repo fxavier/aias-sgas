@@ -339,3 +339,30 @@ class PreliminaryEnvironmentalInformation(models.Model):
 
 
 # END OF FICHA DE INFORMAÇÃO AMBIENTAL PRELIMINAR MOD.AS.02
+
+class EmbeddedMitigation(models.Model):
+    item_number = models.CharField(max_length=100)
+    issue = models.CharField(max_length=255)
+    potential_impact_managed = models.CharField(max_length=255)
+    mitigation_measure = models.CharField(max_length=255)
+    timing = models.CharField(max_length=255)
+    responsibility_for_implementation = models.CharField(max_length=255)
+    means_of_verification = models.CharField(max_length=255)
+
+    def __str__(self) -> str:
+        return self.item_number
+    
+class PlanningOrConstructionPhase(models.Model):
+    item_number = models.CharField(max_length=255)
+    issue = models.CharField(max_length=255)
+    potential_impact_managed = models.CharField(max_length=255)
+    mitigation_measure = models.CharField(max_length=255)
+    timing = models.CharField(max_length=255)
+    responsibility_for_implementation = models.CharField(max_length=255)
+    means_of_verification = models.CharField(max_length=255)
+
+    class Meta:
+        verbose_name_plural = 'Planning/ Constructions Phase'
+
+    def __str__(self) -> str:
+        return self.item_number

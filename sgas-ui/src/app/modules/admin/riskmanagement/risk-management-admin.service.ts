@@ -14,16 +14,23 @@ export class RiskManagementAdminService {
   constructor(private http: HttpClient) { }
 
   getDepartments(): Observable<Department[]>{
-    console.log('apiUrl', `${apiUrl}/riskmanagement/departments/`);
-    const result = this.http.get<Department[]>(`${apiUrl}/riskmanagement/departments/`);
-    console.log('result', result);
-    return result;
+    return this.http.get<Department[]>(`${apiUrl}/riskmanagement/departments/`);
   }
 
-//   getDepartments() {
-//     console.log('apiUrl', `${apiUrl}/riskmanagement/departments/`);
-//     const result = this.http.get(`${apiUrl}/riskmanagement/departments/`);
-//     console.log('result', result);
-//     return result;
-//   }
+  getDepartment(id: number): Observable<Department> {
+    return this.http.get<Department>(`${apiUrl}/riskmanagement/departments/${id}`);
+  }
+
+  addDepartment(department: Omit<Department, 'id'>): Observable<Department> {
+    return this.http.post<Department>(`${apiUrl}/riskmanagement/departments/`, department);
+  }
+
+  editDepartment(department: Department): Observable<Department> {
+    return this.http.put<Department>(`${apiUrl}/riskmanagement/departments/${department.id}`, department);
+  }
+
+  deleteDepartment(id: number): Observable<void> {
+    return this.http.delete<void>(`${apiUrl}/riskmanagement/departments/${id}`);
+  }
+
 }
