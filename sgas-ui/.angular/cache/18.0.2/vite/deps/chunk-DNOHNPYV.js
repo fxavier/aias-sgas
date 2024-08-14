@@ -24,7 +24,7 @@ import {
   Z,
   ZERO,
   hasModifierKey
-} from "./chunk-HN7ZVCGL.js";
+} from "./chunk-PBG3CNI2.js";
 import {
   coerceBooleanProperty,
   coerceElement,
@@ -4586,10 +4586,12 @@ export {
   FocusKeyManager,
   InteractivityChecker,
   FocusTrapFactory,
+  CdkTrapFocus,
   isFakeMousedownFromScreenReader,
   isFakeTouchstartFromScreenReader,
   LiveAnnouncer,
   FocusMonitor,
+  CdkMonitorFocus,
   A11yModule,
   VERSION2 as VERSION,
   AnimationCurves,
@@ -4637,4 +4639,4 @@ export {
   MatRippleLoader,
   _MatInternalFormField
 };
-//# sourceMappingURL=chunk-YGBN4JTW.js.map
+//# sourceMappingURL=chunk-DNOHNPYV.js.map
