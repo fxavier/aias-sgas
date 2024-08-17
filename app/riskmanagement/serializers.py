@@ -21,10 +21,43 @@ class RisksAndImpactSerializer(serializers.ModelSerializer):
         model = RisksAndImpact
         fields = '__all__'
 
+# class EnvironAndSocialRiskAndImapactAssessementSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = EnvironAndSocialRiskAndImapactAssessement
+#         fields = '__all__'
+
 class EnvironAndSocialRiskAndImapactAssessementSerializer(serializers.ModelSerializer):
+    department_name = serializers.CharField(source='departament.name', read_only=True)
+    risks_impact_description = serializers.CharField(source='risks_and_impact.description', read_only=True)
+    legal_requirement_titles = serializers.SerializerMethodField()
+    environmental_factor_description = serializers.CharField(source='environmental_factor.description', read_only=True)
+
     class Meta:
         model = EnvironAndSocialRiskAndImapactAssessement
-        fields = '__all__'
+        fields = [
+            'id',
+            'intensity',
+            'probability',
+            'significance',
+            'description_of_measures',
+            'deadline',
+            'effectiveness_assessment',
+            'compliance_requirements',
+            'observations',
+            'departament',
+            'department_name', 
+            'risks_and_impact',
+            'risks_impact_description',
+            'environmental_factor',
+            'environmental_factor_description',
+            'legal_requirements',
+            'legal_requirement_titles',
+            'probability',
+            'created_by'
+        ]
+    def get_legal_requirement_titles(self, obj):
+        # Fetch the document titles from the related LegalRequirement objects
+        return [requirement.document_title for requirement in obj.legal_requirements.all()]
 
 class LegalRequirementControlSerializer(serializers.ModelSerializer):
     class Meta:

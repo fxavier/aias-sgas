@@ -6,7 +6,9 @@ from riskmanagement.views import (
     ResponsibleForFillingFormViewSet, ResponsibleForVerificationViewSet, 
     BiodeversidadeRecursosNaturaisViewSet, SubprojectViewSet, 
     EnvironmentalSocialScreeningViewSet, ConsultationAndEngagementViewSet, 
-    ScreeningResultViewSet, PreliminaryEnvironmentalInformationViewSet
+    ScreeningResultViewSet, PreliminaryEnvironmentalInformationViewSet,
+    DurationViewSet, ExtensionViewSet, LifeCycleViewSet, ProbabilityViewSet, ResponseTypeViewSet,
+    IntensityViewSet
 )
 
 router = routers.DefaultRouter()
@@ -24,9 +26,15 @@ router.register('environmental-social-screenings', EnvironmentalSocialScreeningV
 router.register('consultation-and-engagements', ConsultationAndEngagementViewSet)
 router.register('screening-results', ScreeningResultViewSet)
 router.register('preliminary-environmental-information', PreliminaryEnvironmentalInformationViewSet)
+router.register('durations', DurationViewSet, basename='durations')
+router.register('extensions', ExtensionViewSet, basename='extensions')
+router.register('LifeCycles', LifeCycleViewSet, basename='lifecycles')
+router.register('probabilities', ProbabilityViewSet, basename='probabilities')
+router.register('response-types', ResponseTypeViewSet, basename='response-types')
+router.register('intensities', IntensityViewSet, basename='intensities')
 
 app_name = 'riskmanagement'
 
 urlpatterns = [
-    path('', include(router.urls)),
+    path('', include(router.urls))
 ]

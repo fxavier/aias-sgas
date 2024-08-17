@@ -1,5 +1,7 @@
 from django.db import models
+from django.http import JsonResponse
 from users.models import User
+from django.db.models.signals import pre_save
 #from core.utils.utils import law_file_path
 
  
@@ -366,3 +368,33 @@ class PlanningOrConstructionPhase(models.Model):
 
     def __str__(self) -> str:
         return self.item_number
+    
+
+def EnvironAndSocialRiskAndImapactAssessement_pre_save_receiver(sender, instance, *args, **kwargs):
+    if instance.intensity == 'BAIXA':
+        if instance.probability == 'IMPROVAVEL':
+            instance.significance = 'Pouco Significativo'
+        elif instance.probability == 'PROVAVEL':
+            instance.significance = 'Pouco Significativo'
+        elif instance.probability == 'ALTAMENTE_PROVAVEL':
+            instance.significance = 'Significativo'
+    elif instance.intensity == 'MEDIA':
+        if instance.probability == 'IMPROVAVEL':
+            instance.significance = 'Pouco Significativo'
+        elif instance.probability == 'PROVAVEL':
+            instance.significance = 'Significativo'
+        elif instance.probability == 'ALTAMENTE_PROVAVEL':
+            instance.significance = 'Significativo'
+        elif instance.probability == 'DEFINITIVA':
+            instance.significance = 'Muito Significativo'
+    elif instance.intensity == 'ALTA':
+        if instance.probability == 'IMPROVAVEL':
+            instance.significance = 'Significativo'
+        elif instance.probability == 'PROVAVEL':
+            instance.significance = 'Significativo'
+        elif instance.probability == 'ALTAMENTE_PROVAVEL':
+            instance.significance = 'Muito Significativo'
+        elif instance.probability == 'DEFINITIVA':
+            instance.significance = 'Muito Significativo'
+
+pre_save.connect(EnvironAndSocialRiskAndImapactAssessement_pre_save_receiver, sender=EnvironAndSocialRiskAndImapactAssessement)

@@ -1,4 +1,11 @@
 from rest_framework import viewsets
+from rest_framework.viewsets import ViewSet
+from rest_framework.response import Response
+from riskmanagement.models import (
+    Duration, Extension, LifeCycle, Intensity, Probability, ResponseType
+)
+
+
 from riskmanagement.models import (
     Department, EnvironmentalFactor, RisksAndImpact, EnvironAndSocialRiskAndImapactAssessement,
     LegalRequirementControl, ResponsibleForFillingForm, ResponsibleForVerification,
@@ -65,3 +72,36 @@ class ScreeningResultViewSet(viewsets.ModelViewSet):
 class PreliminaryEnvironmentalInformationViewSet(viewsets.ModelViewSet):
     queryset = PreliminaryEnvironmentalInformation.objects.all()
     serializer_class = PreliminaryEnvironmentalInformationSerializer
+
+class DurationViewSet(ViewSet):
+    def list(self, request):
+        choices = {choice[0]: choice[1] for choice in Duration.choices}
+        return Response(choices)
+
+class ExtensionViewSet(ViewSet):
+    def list(self, request):
+        choices = {choice[0]: choice[1] for choice in Extension.choices}
+        return Response(choices)
+    
+class LifeCycleViewSet(ViewSet):
+    def list(self, request):
+        choices = {choice[0]: choice[1] for choice in LifeCycle.choices}
+        return Response(choices)
+    
+class IntensityViewSet(ViewSet):
+    def list(self, request):
+        choices = {choice[0]: choice[1] for choice in Intensity.choices}
+        return Response(choices)
+    
+class ProbabilityViewSet(ViewSet):
+    def list(self, request):
+        choices = {choice[0]: choice[1] for choice in Probability.choices}
+        return Response(choices)
+    
+class ResponseTypeViewSet(ViewSet):
+    def list(self, request):
+        choices = {choice[0]: choice[1] for choice in ResponseType.choices}
+        return Response(choices)
+    
+
+    
