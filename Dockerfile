@@ -52,8 +52,8 @@ USER app
 
 # Changing CMD to an entrypoint script that can handle migrations
 # Create an entrypoint.sh script in your project that runs migrations before starting the server
-COPY ./entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
-ENTRYPOINT ["/entrypoint.sh"]
+# COPY ./entrypoint.sh /entrypoint.sh
+# RUN chmod +x /entrypoint.sh
+# ENTRYPOINT ["/entrypoint.sh"]
 
 CMD ["run.sh"]
