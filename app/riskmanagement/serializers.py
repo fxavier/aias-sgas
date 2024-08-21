@@ -37,6 +37,9 @@ class EnvironAndSocialRiskAndImapactAssessementSerializer(serializers.ModelSeria
         fields = [
             'id',
             'intensity',
+            'activity',
+            'life_cycle',
+            'statute',
             'probability',
             'significance',
             'description_of_measures',
@@ -52,7 +55,7 @@ class EnvironAndSocialRiskAndImapactAssessementSerializer(serializers.ModelSeria
             'environmental_factor_description',
             'legal_requirements',
             'legal_requirement_titles',
-            'probability',
+            'observations',
             'created_by'
         ]
     def get_legal_requirement_titles(self, obj):

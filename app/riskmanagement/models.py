@@ -85,7 +85,7 @@ class EnvironAndSocialRiskAndImapactAssessement(models.Model):
     significance = models.CharField(max_length=255, null=True, blank=True, editable=False)
     description_of_measures = models.TextField()
     deadline = models.CharField(max_length=255)
-    responsible = models.ForeignKey(User, on_delete=models.CASCADE, related_name='responsible')
+    responsible = models.ForeignKey(User, on_delete=models.CASCADE, related_name='responsible', null=True, blank=True)
     effectiveness_assessment = models.TextField()
     legal_requirements = models.ManyToManyField('LegalRequirementControl', related_name='legal_requirements')
     compliance_requirements = models.TextField()   

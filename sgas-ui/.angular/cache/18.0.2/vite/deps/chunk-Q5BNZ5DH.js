@@ -4,6 +4,11 @@ import {
   ViewportRuler
 } from "./chunk-EGSEUB2X.js";
 import {
+  DomPortalOutlet,
+  PortalModule,
+  TemplatePortal
+} from "./chunk-6XIA4OHK.js";
+import {
   BidiModule,
   Directionality,
   ESCAPE,
@@ -13,11 +18,6 @@ import {
   coerceArray,
   coerceCssPixelValue
 } from "./chunk-X2OMSDWJ.js";
-import {
-  DomPortalOutlet,
-  PortalModule,
-  TemplatePortal
-} from "./chunk-6XIA4OHK.js";
 import {
   Platform,
   _getEventTarget,
@@ -2870,4 +2870,4 @@ export {
   OverlayModule,
   FullscreenOverlayContainer
 };
-//# sourceMappingURL=chunk-SPUSHFSZ.js.map
+//# sourceMappingURL=chunk-Q5BNZ5DH.js.map

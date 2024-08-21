@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { Department, EnvironAndSocialRiskAndImpactAssessment, EnvironmentalFactor, LegalRequirementControl, RisksAndImpact } from './types/types';
 import { environment } from 'environments/environment.development';
 
@@ -14,7 +14,9 @@ export class RiskManagementService {
   constructor(private http: HttpClient) { }
 
   getEnvSocialRiskImpact(): Observable<EnvironAndSocialRiskAndImpactAssessment[]>{
-    return this.http.get<EnvironAndSocialRiskAndImpactAssessment[]>(`${apiUrl}/riskmanagement/environ-and-social-risk-and-impact-assessments/`);
+    return this.http.get<EnvironAndSocialRiskAndImpactAssessment[]>(`${apiUrl}/riskmanagement/environ-and-social-risk-and-impact-assessments/`).pipe(
+      tap(data => console.log('Raw API response:', data))
+    );
   }
 
   getDepartments(): Observable<Department[]> {
@@ -39,13 +41,14 @@ export class RiskManagementService {
       `${apiUrl}/riskmanagement/environ-and-social-risk-and-impact-assessments/`, envSocialImpact);
   }
 
+  updateEnvSocialImpact(envSocialImpact: EnvironAndSocialRiskAndImpactAssessment):
+    Observable<EnvironAndSocialRiskAndImpactAssessment> {
+    return this.http.put<EnvironAndSocialRiskAndImpactAssessment>(
+      `${apiUrl}/riskmanagement/environ-and-social-risk-and-impact-assessments/${envSocialImpact.id}/`, envSocialImpact);
+  }
 
+  deleteEnvSocialImpact(id: number): Observable<void> {
+    return this.http.delete<void>(`${apiUrl}/riskmanagement/environ-and-social-risk-and-impact-assessments/${id}/`);
+  }
 
-  // getDepartment(id: number): Observable<Department> {
-  //   return this.http.get<Department>(`${apiUrl}/riskmanagement/departments/${id}`);
-  // }
-
-  // addDepartment(department: Omit<Department, 'id'>): Observable<Department> {
-  //   return this.http.post<Department>(`${apiUrl}/riskmanagement/departments/`, department);
-  // }
 }

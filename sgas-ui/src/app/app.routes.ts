@@ -92,8 +92,9 @@ export const appRoutes: Route[] = [
             initialData: initialDataResolver
         },
         children: [
-            {path: 'exemplo', loadChildren: () => import('app/modules/apps/exemplo/exemplo.routes')},
-            {path: 'add-env-social-risk-impact-assessement', loadChildren: () => import('app/modules/apps/risk-management/add-social-risk-impact-assement.routes')}
+            { path: 'exemplo', loadChildren: () => import('app/modules/apps/exemplo/exemplo.routes')},
+            { path: 'add-env-social-risk-impact-assessement', loadChildren: () => import('app/modules/apps/risk-management/add-social-risk-impact-assement.routes')},
+            { path: 'list-env-social-risk-impact-assessement', loadChildren: () => import('app/modules/apps/risk-management/list-env-social-risk-impact/list-social-risk-impact.routes')}
         ]
     }
 ];

@@ -16,7 +16,8 @@ export interface Department {
 
   export interface EnvironAndSocialRiskAndImpactAssessment {
     id: number;
-    departament: Department;
+    departament: number;
+    department_name: string;
     activity: string;
     risks_and_impact: RisksAndImpact;
     environmental_factor: EnvironmentalFactor;
