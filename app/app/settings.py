@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 import os
+#import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -48,6 +49,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'graphene_django',
     'storages',
     'corsheaders',
     'rest_framework',
@@ -62,6 +64,8 @@ INSTALLED_APPS = [
     'organizationalcapacityandcompetency',
     'reportingmonitoringandreview',
     'resourceefficiencyandpollutionprevention',
+
+   # 'dj_database_url'
     # 'tailwind',
     # 'sweetify',
 ]
@@ -105,12 +109,22 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'HOST': os.environ.get('DB_HOST'),
+        'PORT': os.environ.get('DB_PORT', '5432'),  # Defaults to '5432' if DB_PORT is not set
         'NAME': os.environ.get('DB_NAME'),
         'USER': os.environ.get('DB_USER'),
         'PASSWORD': os.environ.get('DB_PASS'),
+        'OPTIONS': {
+            'sslmode': 'require',  # Ensures SSL connection (required by Supabase)
+        },
     }
-
 }
+
+# DATABASES = {
+#     'default': dj_database_url.parse(
+#         os.environ.get('DATABASE_URL'),
+#         conn_max_age=0
+#     )
+# }
 
 
 
@@ -165,12 +179,39 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'users.User'
 
-AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY')
-AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_KEY')
-AWS_STORAGE_BUCKET_NAME = os.environ.get('S3_BUCKET_NAME')
-AWS_S3_REGION_NAME = 'us-east-1'  # e.g., 'us-west-1'
+SUPABASE_PROJECT_ID = os.environ.get('SUPABASE_PROJECT_ID')
+SUPABASE_ACCESS_KEY = os.environ.get('SUPABASE_ACCESS_KEY')
+SUPABASE_BUCKET_NAME = os.environ.get('SUPABASE_BUCKET_NAME', 'documents')
+
+AWS_ACCESS_KEY_ID = os.environ.get('S3_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = os.environ.get('S3_SECRET_ACCESS_KEY')
+AWS_STORAGE_BUCKET_NAME = SUPABASE_BUCKET_NAME
+AWS_S3_ENDPOINT_URL = f'https://{SUPABASE_PROJECT_ID}.supabase.co/storage/v1/s3'
+AWS_S3_REGION_NAME = 'eu-west-3'
 AWS_S3_SIGNATURE_VERSION = 's3v4'
 
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
+GRAPHENE = {
+    'SCHEMA': 'app.schema.schema',
+    'MIDDLEWARE': [
+        'app.middlewares.CustomAuthMiddleware',
+     #   'graphql_jwt.middleware.JSONWebTokenMiddleware',
+        'app.middlewares.CustomPaginationMiddleware'
+    ],
+    'PAGE_SIZE': 20
+}
+
+# AUTHENTICATION_BACKENDS = [
+#     'graphql_jwt.backends.JSONWebTokenBackend',
+#     'django.contrib.auth.backends.ModelBackend',
+# ]
+
+
+#CORS_ALLOW_ALL_ORIGINS = True
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+]
+CORS_ALLOW_CREDENTIALS = True
 #SWEETIFY_SWEETALERT_LIBRARY = 'sweetalert2'

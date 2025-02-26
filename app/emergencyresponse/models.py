@@ -176,7 +176,7 @@ class ListaVerificacaoKitPrimeirosSocorros(models.Model):
     data = models.DateField()
     prazo = models.DateField()
     observacao = models.TextField()
-    inspecao_realizada_por = models.ForeignKey(User, on_delete=models.CASCADE)
+    inspecao_realizada_por = models.CharField(max_length=255)
 
     class Meta:
         verbose_name = 'FR.AS.011 LISTA DE VERIFICAÇÃO KIT DE PRIMEIROS SOCORROS'

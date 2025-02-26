@@ -1,5 +1,5 @@
 # Use a specific version of the python image for consistency
-FROM python:3.9-alpine3.13
+FROM python:3.9.21-alpine3.20
 
 LABEL maintainer="xavierfrancisco353@gmail.com"
 

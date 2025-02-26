@@ -17,8 +17,14 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls.static import static
 from django.conf import settings
+from graphene_file_upload.django import FileUploadGraphQLView
+from django.views.decorators.csrf import csrf_exempt
+from app.schema import schema  # Import the schema
+from app.views import download_file  # Import the view we'll create
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('riskmanagement/', include('riskmanagement.urls')),
+    path('api/graphql', csrf_exempt(FileUploadGraphQLView.as_view(graphiql=True, schema=schema))),
+    path('https://ggitxibhsovusmdtfqwt.supabase.co/storage/v1/s3/documents/<str:file_key>', download_file, name='download_file'),  # Add download endpoint
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
