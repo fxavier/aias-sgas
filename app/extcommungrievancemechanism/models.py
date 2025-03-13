@@ -32,8 +32,8 @@ class ClaimNonComplianceControl(models.Model):
   
     class Meta:
         db_table = 'claim_non_compliance_control'
-        verbose_name = 'Non Compliance Control'
-        verbose_name_plural = 'Non Compliance Controls'
+        verbose_name = 'FR.AS.013_Non Compliance Control'
+        verbose_name_plural = 'FR.AS.013_Non Compliance Controls'
 
     def __str__(self):
         return f'{self.claim} - {self.non_compliance_control}'
@@ -54,8 +54,8 @@ class ClaimComplainControl(models.Model):
 
     class Meta:
         db_table = 'claim_complain_control'
-        verbose_name = 'Claim And Complain Control'
-        verbose_name_plural = 'Claim And Complain Controls'
+        verbose_name = 'FR.AS.013_Claim And Complain Control'
+        verbose_name_plural = 'FR.AS.013_Claim And Complain Controls'
 
     def __str__(self):
         return f'{self.number} - {self.claim_complain_submitted_by}'
@@ -161,8 +161,8 @@ class ComplaintAndClaimRecord(models.Model):
   
     class Meta:
         db_table = 'complaint_and_claim_record'
-        verbose_name = 'Complaints and Claims Registration Form FR.AS.026'
-        verbose_name_plural = 'Complaints and Claims Registration Form FR.AS.026'
+        verbose_name = 'FR.AS.026_Complaints and Claims Registration Form'
+        verbose_name_plural = 'FR.AS.026_Complaints and Claims Registration Form'
 
     def __str__(self):
         return f'{self.number} - {self.department}'
@@ -206,5 +206,5 @@ class WorkerGrievance(models.Model):
 
 
     class Meta:
-        verbose_name = 'Worker Grievance (FR.AS.033)'
-        verbose_name_plural = 'Worker Grievances (FR.AS.033)'
+        verbose_name = 'FR.AS.033_Worker Grievance'
+        verbose_name_plural = 'FR.AS.033_Worker Grievances'

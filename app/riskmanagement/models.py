@@ -84,9 +84,9 @@ class EnvironAndSocialRiskAndImapactAssessement(models.Model):
     probability = models.CharField(max_length=50, choices=Probability.choices)
     significance = models.CharField(max_length=255, null=True, blank=True, editable=False)
     description_of_measures = models.TextField()
-    deadline = models.CharField(max_length=255)
+    deadline = models.CharField(max_length=255) #COLOCAR CALENDARIO
     responsible = models.ForeignKey(User, on_delete=models.CASCADE, related_name='responsible', null=True, blank=True)
-    effectiveness_assessment = models.TextField()
+    effectiveness_assessment = models.TextField()  # OPCOES DE RESPOSTA (EFECTIVE, NOT EFFECTIVE)
     legal_requirements = models.ManyToManyField('LegalRequirementControl', related_name='legal_requirements')
     compliance_requirements = models.TextField()   
     observations = models.TextField()
@@ -97,8 +97,8 @@ class EnvironAndSocialRiskAndImapactAssessement(models.Model):
     def __str__(self):
         return self.activity
     class Meta:
-        verbose_name = 'Environmental and Social Risk and Impact Assessement (FR.AS.002)'
-        verbose_name_plural = 'Environmental and Social Risks and Impact Assessements (FR.AS.002)'
+        verbose_name = 'FR.AS.002_Environmental and Social Risk and Impact Assessement'
+        verbose_name_plural = 'FR.AS.002_Environmental and Social Risks and Impact Assessements'
 
 
 class LegalRequirementControl(models.Model):
@@ -121,8 +121,8 @@ class LegalRequirementControl(models.Model):
    
     
     class Meta:
-        verbose_name = 'Legal Requirement Control (FR.AS.003)'
-        verbose_name_plural = 'Legal Requirements Control (FR.AS.003)'
+        verbose_name = 'FR.AS.003_Legal Requirement Control'
+        verbose_name_plural = 'Legal Requirements Control'
 
 
 # BEGIN OF FORMULARIO DE TRIAGEM AMBIENTAL E SOCIAL FR.AS.023
@@ -189,10 +189,10 @@ class EnvironmentalSocialScreening(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.subproject.name
+        return self.subproject.name 
     class Meta:
-        verbose_name = 'Environmental and Social Screening Form (FR.AS.023)'
-        verbose_name_plural = 'Environmental and Social Screening Forms (FR.AS.023)'
+        verbose_name = 'FR.AS.023_Environmental and Social Screening Form'
+        verbose_name_plural = 'FR.AS.023_Environmental and Social Screening Forms'
 
 class ConsultationAndEngagement(models.Model):
     subproject = models.ForeignKey(Subproject, on_delete=models.CASCADE, related_name='consultations')
@@ -336,8 +336,8 @@ class PreliminaryEnvironmentalInformation(models.Model):
         return self.activity_name
     
     class Meta:
-        verbose_name = 'Preliminary Environmental Information Form (MOD.AS.02)'
-        verbose_name_plural = 'Preliminary Environmental Information Forms (MOD.AS.02)'
+        verbose_name = 'MOD.AS.02_Preliminary Environmental Information Form'
+        verbose_name_plural = 'MOD.AS.02_Preliminary Environmental Information Forms'
 
 
 # END OF FICHA DE INFORMAÇÃO AMBIENTAL PRELIMINAR MOD.AS.02

@@ -10,8 +10,8 @@ class WastManagement(models.Model):
     special_instructions = models.TextField()
 
     class Meta:
-        verbose_name = 'Waste Management (FR.AS.032)'
-        verbose_name_plural = 'Waste Managements (FR.AS.032)'
+        verbose_name = 'FR.AS.032_Waste Management'
+        verbose_name_plural = 'FR.AS.032_Waste Managements'
 
     def __str__(self):
         return self.waste_route

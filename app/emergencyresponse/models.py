@@ -228,8 +228,8 @@ class IncidentFlashReport(models.Model):
     
 
     class Meta:
-        verbose_name = 'Incident Flash Report (FR.AS.028)'
-        verbose_name_plural = 'Incident Flash Reports (FR.AS.028)'
+        verbose_name = 'FR.AS.028_Incident Flash Report'
+        verbose_name_plural = 'FR.AS.028_Incident Flash Reports'
 
     def __str__(self):  
         return self.location_incident

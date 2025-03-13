@@ -12,8 +12,8 @@ class TrainingNeeds(models.Model):
     potential_training_participants = models.TextField()
 
     class Meta:
-        verbose_name = 'Training Need (FR.AS.005)'
-        verbose_name_plural = 'Training Needs (FR.AS.005)'
+        verbose_name = 'FR.AS.005_Training Need'
+        verbose_name_plural = 'FR.AS.005_Training Needs'
 
     def __str__(self):
         return self.training
@@ -57,8 +57,8 @@ class TrainingPlan(models.Model):
     observations = models.TextField()
 
     class Meta:
-        verbose_name = 'Training Plan (FR.AS.006)'
-        verbose_name_plural = 'Training Plans (FR.AS.006)'
+        verbose_name = 'FR.AS.006_Training Plan'
+        verbose_name_plural = 'FR.AS.006_Training Plans'
 
     def __str__(self):
         return self.training_title
@@ -98,8 +98,8 @@ class TrainingEffectivnessAssessment(models.Model):
     human_resource_evaluation = models.CharField(max_length=50, choices=HumanResourceAnswerChoices.choices)
 
     class Meta:
-        verbose_name = 'Training Effectiveness Assessment (FR.AS.007)'
-        verbose_name_plural = 'Training Effectiveness Assessments (FR.AS.007)'
+        verbose_name = 'FR.AS.007_Training Effectiveness Assessment'
+        verbose_name_plural = 'FR.AS.007_Training Effectiveness Assessments'
 
     def __str__(self):
         return self.trainee
@@ -136,8 +136,8 @@ class TrainingMatrix(models.Model):
     approved_by = models.CharField(max_length=100)
 
     class Meta:
-        verbose_name = 'Training Matrix (FR.AS.006)'
-        verbose_name_plural = 'Training Matrix (FR.AS.006)'
+        verbose_name = 'FR.AS.006_Training Matrix'
+        verbose_name_plural = 'FR.AS.006_Training Matrix'
 
     def __str__(self):
         return self.position.name
@@ -158,8 +158,8 @@ class OHSACTING(models.Model):
     date = models.DateField(auto_now_add=True)
 
     class Meta:
-        verbose_name = 'OHS ACTING (FR.AS.038)' 
-        verbose_name_plural = 'OHS ACTING (FR.AS.038)'
+        verbose_name = 'FR.AS.038_OHS ACTING' 
+        verbose_name_plural = 'FR.AS.038_OHS ACTING'
 
     def __str__(self):
         return self.fullname
