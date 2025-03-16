@@ -1,0 +1,36 @@
+{% load i18n %} {% if app_list %} {% for app in app_list %}
+<div
+	class="app-{{ app.app_label }} app-item module{% if app.app_url in request.path|urlencode %} current-app{% endif %}"
+>
+	<a
+		href="{{ app.app_url }}"
+		class="app-name section-title{% if app.app_url in request.path|urlencode %} section-selected{% endif %}"
+	>
+		<span class="app-label">{{ app.name }}</span>
+	</a>
+	<div class="model-list">
+		{% for model in app.models %}
+		<div
+			class="model-{{ model.object_name|lower }} model{% if model.admin_url in request.path|urlencode %} current-model{% endif %}"
+		>
+			{% if model.admin_url %}
+			<a
+				href="{{ model.admin_url }}"
+				{%
+				if
+				model.admin_url
+				in
+				request.path|urlencode
+				%}
+				aria-current="page"
+				{%
+				endif
+				%}
+				>{{ model.name }}</a
+			>
+			{% else %} {{ model.name }} {% endif %}
+		</div>
+		{% endfor %}
+	</div>
+</div>
+{% endfor %} {% endif %}

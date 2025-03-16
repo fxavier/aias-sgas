@@ -6,7 +6,7 @@ class TrainingNeeds(models.Model):
     filled_by = models.CharField(max_length=100)
     date = models.DateField()
     department = models.ForeignKey(Department, on_delete=models.CASCADE, null=True, blank=True)
-    subproject = models.CharField(max_length=100, null=True, blank=True)
+    subproject = models.ForeignKey(Subproject, on_delete=models.CASCADE, null=True, blank=True)
     training = models.CharField(max_length=255)
     training_objective = models.TextField()
     proposal_of_training_entity = models.CharField(max_length=255)

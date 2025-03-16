@@ -1,0 +1,98 @@
+{% load i18n %}
+<button
+	class="sticky toggle-nav-sidebar"
+	id="toggle-nav-sidebar"
+	aria-label="{% translate 'Toggle navigation' %}"
+></button>
+<nav class="sticky" id="nav-sidebar">
+	{% include 'admin/app_list.html' with app_list=available_apps
+	show_changelinks=False %}
+</nav>
+
+<style>
+	/* Custom CSS for collapsible sidebar */
+	.app-item {
+		cursor: pointer;
+		position: relative;
+	}
+
+	.app-item .section {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		padding-right: 10px;
+	}
+
+	.app-item .section:after {
+		content: '▼';
+		font-size: 0.8em;
+		transition: transform 0.3s;
+	}
+
+	.app-item.collapsed .section:after {
+		transform: rotate(-90deg);
+	}
+
+	.app-item.collapsed .model-list {
+		display: none;
+	}
+
+	/* Add some padding to make the sidebar more readable */
+	.model-list {
+		padding-left: 15px;
+	}
+</style>
+
+<script>
+	document.addEventListener('DOMContentLoaded', function () {
+		// Get all app items in the sidebar
+		const appItems = document.querySelectorAll('#nav-sidebar .app-item');
+
+		// Add click handlers to each app header
+		appItems.forEach(function (appItem) {
+			// Find the app name header (first link in the app-item)
+			const appHeader = appItem.querySelector('.app-name');
+			if (!appHeader) return;
+
+			// Wrap the app name in a div for better styling
+			const sectionDiv = document.createElement('div');
+			sectionDiv.className = 'section';
+			// Clone the app header and replace it with our section div
+			const clonedHeader = appHeader.cloneNode(true);
+			appHeader.parentNode.replaceChild(sectionDiv, appHeader);
+			sectionDiv.appendChild(clonedHeader);
+
+			// Add click handler to toggle collapse
+			sectionDiv.addEventListener('click', function (event) {
+				// Prevent the default link behavior if clicking on the arrow or section
+				// (but not on the app name link itself)
+				if (event.target !== clonedHeader) {
+					event.preventDefault();
+				}
+
+				appItem.classList.toggle('collapsed');
+
+				// Save state to localStorage
+				const appId = appItem
+					.querySelector('.app-name')
+					.getAttribute('href')
+					.replace(/\//g, '_');
+				localStorage.setItem(
+					'app_collapsed_' + appId,
+					appItem.classList.contains('collapsed')
+				);
+			});
+
+			// Restore collapsed state from localStorage
+			const appId = appItem
+				.querySelector('.app-name')
+				.getAttribute('href')
+				.replace(/\//g, '_');
+			const isCollapsed =
+				localStorage.getItem('app_collapsed_' + appId) === 'true';
+			if (isCollapsed) {
+				appItem.classList.add('collapsed');
+			}
+		});
+	});
+</script>

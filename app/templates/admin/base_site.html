@@ -1,0 +1,13 @@
+{% extends "admin/base_site.html" %} {% block extrahead %} {{ block.super }}
+<style>
+	/* Additional styles for admin branding */
+	#header {
+		background: #383838;
+		color: white;
+	}
+
+	.app-item .section:hover {
+		background-color: rgba(0, 0, 0, 0.05);
+	}
+</style>
+{% endblock %}
