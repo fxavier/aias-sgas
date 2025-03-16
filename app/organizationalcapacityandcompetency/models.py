@@ -1,19 +1,20 @@
 from django.db import models
-from riskmanagement.models import Department
+from riskmanagement.models import Department, Subproject
 
 
 class TrainingNeeds(models.Model):
     filled_by = models.CharField(max_length=100)
     date = models.DateField()
-    department = models.ForeignKey(Department, on_delete=models.CASCADE)
+    department = models.ForeignKey(Department, on_delete=models.CASCADE, null=True, blank=True)
+    subproject = models.CharField(max_length=100, null=True, blank=True)
     training = models.CharField(max_length=255)
     training_objective = models.TextField()
     proposal_of_training_entity = models.CharField(max_length=255)
     potential_training_participants = models.TextField()
 
     class Meta:
-        verbose_name = 'FR.AS.005_Training Need'
-        verbose_name_plural = 'FR.AS.005_Training Needs'
+        verbose_name = 'FR.AS.005 Training Need'
+        verbose_name_plural = 'FR.AS.005 Training Needs'
 
     def __str__(self):
         return self.training
@@ -90,7 +91,8 @@ class HumanResourceAnswerChoices(models.Choices):
 class TrainingEffectivnessAssessment(models.Model):
     training = models.CharField(max_length=255)
     date = models.DateField()
-    department = models.ForeignKey(Department, on_delete=models.CASCADE)
+    department = models.ForeignKey(Department, on_delete=models.CASCADE, null=True, blank=True)
+    subproject = models.ForeignKey(Subproject, on_delete=models.CASCADE, null=True, blank=True)
     trainee = models.CharField(max_length=100)
     immediate_supervisor = models.CharField(max_length=100)
     training_evaluation_question = models.ForeignKey(TrainingEvaluationQuestions, on_delete=models.CASCADE)
@@ -98,8 +100,8 @@ class TrainingEffectivnessAssessment(models.Model):
     human_resource_evaluation = models.CharField(max_length=50, choices=HumanResourceAnswerChoices.choices)
 
     class Meta:
-        verbose_name = 'FR.AS.007_Training Effectiveness Assessment'
-        verbose_name_plural = 'FR.AS.007_Training Effectiveness Assessments'
+        verbose_name = 'FR.AS.007 Training Effectiveness Assessment'
+        verbose_name_plural = 'FR.AS.007 Training Effectiveness Assessments'
 
     def __str__(self):
         return self.trainee
@@ -158,8 +160,8 @@ class OHSACTING(models.Model):
     date = models.DateField(auto_now_add=True)
 
     class Meta:
-        verbose_name = 'FR.AS.038_OHS ACTING' 
-        verbose_name_plural = 'FR.AS.038_OHS ACTING'
+        verbose_name = 'FR.AS.038 OHS ACTING' 
+        verbose_name_plural = 'FR.AS.038 OHS ACTING'
 
     def __str__(self):
         return self.fullname

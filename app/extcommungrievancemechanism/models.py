@@ -1,5 +1,5 @@
 from django.db import models
-from riskmanagement.models import Department
+from riskmanagement.models import Department, Subproject
 from users.models import User
 
 class Status(models.TextChoices):
@@ -17,7 +17,8 @@ class NotifiedComplaint(models.TextChoices):
 
 class ClaimNonComplianceControl(models.Model):
     number = models.CharField(max_length=50, unique=True)
-    department = models.ForeignKey(Department, on_delete=models.CASCADE)
+    department = models.ForeignKey(Department, on_delete=models.CASCADE, null=True, blank=True)
+    subproject = models.ForeignKey(Subproject, on_delete=models.CASCADE, null=True, blank=True)
     non_compliance_description = models.TextField()
     identified_causes = models.TextField()
     corrective_actions = models.TextField()
@@ -27,13 +28,13 @@ class ClaimNonComplianceControl(models.Model):
     effectiveness_evaluation = models.CharField(max_length=50, choices=EfecctivivenessEvaluation.choices, default=EfecctivivenessEvaluation.NOT_EFFECTIVE)
     responsible_person_evaluation = models.CharField(max_length=100)
     observation = models.TextField()
-    created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='claim_non_compliance_control')
+   # created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='claim_non_compliance_control')
     created_at = models.DateTimeField(auto_now_add=True)
   
     class Meta:
         db_table = 'claim_non_compliance_control'
         verbose_name = 'FR.AS.013_Non Compliance Control'
-        verbose_name_plural = 'FR.AS.013_Non Compliance Controls'
+        verbose_name_plural = 'FR.AS.013 Non Compliance Controls'
 
     def __str__(self):
         return f'{self.claim} - {self.non_compliance_control}'
@@ -49,7 +50,7 @@ class ClaimComplainControl(models.Model):
     claim_complain_status = models.CharField(max_length=50, choices=Status.choices, default=Status.PENDING)
     closure_date = models.DateField()
     observation = models.TextField()
-    created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='claim_complain_control')
+   # created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='claim_complain_control')
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
@@ -156,13 +157,13 @@ class ComplaintAndClaimRecord(models.Model):
     follow_up = models.TextField()
     involved_institutions = models.CharField(max_length=100, null=True, blank=True)
     suggested_preventive_actions = models.TextField()
-    created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='complaint_and_claim_records')
+   # created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='complaint_and_claim_records')
     created_at = models.DateTimeField(auto_now_add=True)
   
     class Meta:
         db_table = 'complaint_and_claim_record'
-        verbose_name = 'FR.AS.026_Complaints and Claims Registration Form'
-        verbose_name_plural = 'FR.AS.026_Complaints and Claims Registration Form'
+        verbose_name = 'FR.AS.026 Complaints and Claims Registration Form'
+        verbose_name_plural = 'FR.AS.026 Complaints and Claims Registration Form'
 
     def __str__(self):
         return f'{self.number} - {self.department}'
@@ -206,5 +207,5 @@ class WorkerGrievance(models.Model):
 
 
     class Meta:
-        verbose_name = 'FR.AS.033_Worker Grievance'
-        verbose_name_plural = 'FR.AS.033_Worker Grievances'
+        verbose_name = 'FR.AS.033 Worker Grievance'
+        verbose_name_plural = 'FR.AS.033 Worker Grievances'

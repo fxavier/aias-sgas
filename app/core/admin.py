@@ -41,6 +41,8 @@ from resourceefficiencyandpollutionprevention.models import (
     WastManagement
 )
 
+from app.admin import custom_admin_site
+
 class UserAdmin(BaseUserAdmin):
     ordering = ['id']
     list_display = ['email', 'name']
@@ -310,8 +312,9 @@ class DocumentAdmin(ImportExportMixin, admin.ModelAdmin):
         'retention_period',
         'disposal_method',
         'observation',
-        'created_by',
     ]
+    search_fields = ('code', 'document_name', 'document_type__description')
+    list_filter = ('id', 'code', 'document_name', 'document_type')
 
 class WorkerGrievanceAdmin(ImportExportMixin, admin.ModelAdmin):
     list_display = [
@@ -544,4 +547,49 @@ admin.site.register(WasteTransferLog, WasteTranferLogAdmin)
 admin.site.register(WastManagement, WasteManagementadmin)
 
 
-admin.site.site_header = 'SGAS - Sistema de gestão ambiental e social'
+custom_admin_site.register(User, UserAdmin)
+custom_admin_site.register(Department, DepartmentAdmin)
+custom_admin_site.register(EnvironmentalFactor, EnvironmentalFactorAdmin)
+custom_admin_site.register(RisksAndImpact, RisksAndImpactAdmin)
+custom_admin_site.register(EnvironAndSocialRiskAndImapactAssessement, EnvironAndSocialRiskAndImapactAssessementAdmin)
+custom_admin_site.register(LegalRequirementControl, LegalRequirementControlAdmin)
+custom_admin_site.register(ResponsibleForFillingForm, ResponsibleFoFillingAdmin)
+custom_admin_site.register(ResponsibleForVerification, ResponsibleForVerificationAdmin)
+custom_admin_site.register(Subproject, SubprojectAdmin)
+custom_admin_site.register(EnvironmentalSocialScreening, EnvironmentalSocialScreeningAdmin)
+custom_admin_site.register(ScreeningResult, ScreeningResultAdmin)
+custom_admin_site.register(BiodeversidadeRecursosNaturais, BiodeversidadeRecursosNaturaisAdmin)
+custom_admin_site.register(PreliminaryEnvironmentalInformation, PreliminaryEnvironmentalInformationAdmin)
+custom_admin_site.register(ClaimNonComplianceControl, ClaimNonComplianceControlAdmin)
+custom_admin_site.register(ComplaintAndClaimRecord, ComplaintAndClaimAdmin)
+custom_admin_site.register(PhotoDocumentProvingClosure)
+custom_admin_site.register(ClaimComplainControl, ClaimComplainControlAdmin)
+custom_admin_site.register(PessoaEnvolvida, PessoaEnvolvidaAdmin)
+custom_admin_site.register(PessoasEnvolvidasNaInvestigacao, PessoasEnvolvidasNaInvestigacaoAdmin)
+custom_admin_site.register(AccoesImediatasECorrectivas, AccoesImediatasECorrectivasAdmin)
+custom_admin_site.register(RelatorioAcidenteIncidente, RelatorioAcidenteIncidenteAdmin)
+custom_admin_site.register(ListaVerificacaoKitPrimeirosSocorros, ListaVerificacaoKitPrimeirosSocorrosAdmin)
+custom_admin_site.register(DocumentType, DocumentTypeAdmin)
+custom_admin_site.register(Document, DocumentAdmin)
+custom_admin_site.register(WorkerGrievance, WorkerGrievanceAdmin)
+custom_admin_site.register(StrategicObjective, StrategicObjectiveAdmin)
+custom_admin_site.register(SpecificObjective, SpecificObjectiveAdmin)
+custom_admin_site.register(TrainingNeeds, TrainingNeedsAdmin)
+custom_admin_site.register(TrainingPlan, TrainingPlanAdmin)
+custom_admin_site.register(TrainingEffectivnessAssessment, TrainingEffectivnessAssessmentAdmin)
+custom_admin_site.register(TrainingEvaluationQuestions, TrainingEvaluationQuetionAdmin)
+custom_admin_site.register(Position, PositionAdmin)
+custom_admin_site.register(Training, TrainingAdmin)
+custom_admin_site.register(ToolBoxTalks, ToolBoxTalksAdmin)
+custom_admin_site.register(TrainingMatrix, TrainingMatrixAdmin)
+custom_admin_site.register(AcceptanceConfirmation, AcceptanceConfirmationAdmin)
+custom_admin_site.register(OHSACTING, OHSACTINGAdmin)
+custom_admin_site.register(Incidents, IncidentsAdmin)
+custom_admin_site.register(IncidentFlashReport, IncidentFlashReportAdmin)
+custom_admin_site.register(EmbeddedMitigation, EmbeddedMitigationAdmin)
+custom_admin_site.register(PlanningOrConstructionPhase, PlanningOrConstructionPhaseAdmin)
+custom_admin_site.register(WasteTransferLog, WasteTranferLogAdmin)
+custom_admin_site.register(WastManagement, WasteManagementadmin)
+
+
+# admin.site.site_header = 'SGAS - Sistema de gestão ambiental e social'

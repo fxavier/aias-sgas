@@ -1,6 +1,7 @@
 from django.db import models
 from riskmanagement.models import Department
 from users.models import User
+from riskmanagement.models import Subproject
 
  
 def relatorio_incidente_file_path(instance, filename):
@@ -126,7 +127,8 @@ class IncidenteEnvolveuEmpreteiro(models.TextChoices):
 class RelatorioAcidenteIncidente(models.Model):
     nome = models.CharField(max_length=255)
     funcao = models.CharField(max_length=255)
-    departamento = models.ForeignKey(Department, on_delete=models.CASCADE)
+    departamento = models.ForeignKey(Department, on_delete=models.CASCADE, null=True, blank=True)
+    subprojecto = models.ForeignKey(Subproject, on_delete=models.CASCADE, null=True, blank=True)
     data = models.DateField()
     hora = models.TimeField()
     local = models.CharField(max_length=255)
@@ -151,13 +153,13 @@ class RelatorioAcidenteIncidente(models.Model):
     pessoa_envolvida = models.ForeignKey(PessoaEnvolvida, on_delete=models.CASCADE)
     pessoas_envolvidas_na_investigacao = models.ManyToManyField(PessoasEnvolvidasNaInvestigacao)
     accoes_imediatas_e_correctivas = models.ManyToManyField(AccoesImediatasECorrectivas)
-    fotografia_frontal = models.ImageField(upload_to=relatorio_incidente_file_path, null=True, blank=True)
-    fotografia_posterior = models.ImageField(upload_to=relatorio_incidente_file_path, null=True, blank=True)
-    fotografia_lateral_direita = models.ImageField(upload_to=relatorio_incidente_file_path, null=True, blank=True)
-    fotografia_lateral_esquerda = models.ImageField(upload_to=relatorio_incidente_file_path, null=True, blank=True)
-    fotografia_do_melhor_angulo = models.ImageField(upload_to=relatorio_incidente_file_path, null=True, blank=True)
-    fotografia = models.ImageField(upload_to=relatorio_incidente_file_path, null=True, blank=True)
-    criado_por = models.ForeignKey(User, on_delete=models.CASCADE)
+    fotografia_frontal = models.ImageField(upload_to='documents/', null=True, blank=True)
+    fotografia_posterior = models.ImageField(upload_to="documents/", null=True, blank=True)
+    fotografia_lateral_direita = models.ImageField(upload_to="documents/", null=True, blank=True)
+    fotografia_lateral_esquerda = models.ImageField(upload_to="documents/", null=True, blank=True)
+    fotografia_do_melhor_angulo = models.ImageField(upload_to="documents/", null=True, blank=True)
+    fotografia = models.ImageField(upload_to="documents/", null=True, blank=True)
+   #  criado_por = models.ForeignKey(User, on_delete=models.CASCADE)
     criado_em = models.DateTimeField(auto_now_add=True)
 
 

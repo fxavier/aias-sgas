@@ -10,8 +10,8 @@ class WasteTransferLog(models.Model):
     special_instructions = models.TextField()
 
     class Meta:
-        verbose_name = 'FR.AS.031_Waste Transfer Log'
-        verbose_name_plural = 'FR.AS.031_Waste Transfer'
+        verbose_name = 'FR.AS.031 Waste Transfer Log'
+        verbose_name_plural = 'FR.AS.031 Waste Transfer'
 
     def __str__(self):
         return self.reference_number

@@ -1,5 +1,5 @@
 # Use a specific version of the python image for consistency
-FROM python:3.9.21-alpine3.20
+FROM python:3.13.2-alpine3.21
 
 LABEL maintainer="xavierfrancisco353@gmail.com"
 
@@ -25,6 +25,7 @@ RUN python -m venv /py && \
       git \
       libffi-dev \
       openssl-dev \
+      python3 \
       python3-dev \
       libxml2-dev \
       libxslt-dev \

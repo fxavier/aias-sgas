@@ -15,6 +15,12 @@ from pathlib import Path
 import os
 #import dj_database_url
 
+# Apply patches for compatibility
+try:
+    import app.patches  # Apply custom patches for library compatibility
+except ImportError:
+    pass  # If the file doesn't exist yet, it's okay
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -53,6 +59,7 @@ INSTALLED_APPS = [
     'storages',
     'corsheaders',
     'rest_framework',
+    'django_filters',
     'import_export',
     'core',
     'users',
@@ -215,3 +222,15 @@ CORS_ALLOWED_ORIGINS = [
 ]
 CORS_ALLOW_CREDENTIALS = True
 #SWEETIFY_SWEETALERT_LIBRARY = 'sweetalert2'
+
+SWAGGER_SETTINGS = {
+    'SECURITY_DEFINITIONS': {
+        'Bearer': {
+            'type': 'apiKey',
+            'name': 'Authorization',
+            'in': 'header'
+        }
+    },
+    'USE_SESSION_AUTH': False,
+    'VALIDATOR_URL': None,
+}

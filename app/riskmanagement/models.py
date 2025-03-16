@@ -2,6 +2,8 @@ from django.db import models
 from django.http import JsonResponse
 from users.models import User
 from django.db.models.signals import pre_save
+
+
 #from core.utils.utils import law_file_path
 
  
@@ -72,7 +74,8 @@ class Status(models.TextChoices):
     AMENDED = 'AMENDED', 'Amended'
 
 class EnvironAndSocialRiskAndImapactAssessement(models.Model):
-    departament = models.ForeignKey(Department, on_delete=models.CASCADE)
+    departament = models.ForeignKey(Department, on_delete=models.CASCADE, null=True, blank=True)
+    subproject = models.ForeignKey('Subproject', on_delete=models.CASCADE, null=True, blank=True)
     activity = models.CharField(max_length=255)
     risks_and_impact = models.ForeignKey(RisksAndImpact, on_delete=models.CASCADE)
     environmental_factor = models.ForeignKey(EnvironmentalFactor, on_delete=models.CASCADE)
@@ -84,21 +87,21 @@ class EnvironAndSocialRiskAndImapactAssessement(models.Model):
     probability = models.CharField(max_length=50, choices=Probability.choices)
     significance = models.CharField(max_length=255, null=True, blank=True, editable=False)
     description_of_measures = models.TextField()
-    deadline = models.CharField(max_length=255) #COLOCAR CALENDARIO
-    responsible = models.ForeignKey(User, on_delete=models.CASCADE, related_name='responsible', null=True, blank=True)
+    deadline = models.DateField() #COLOCAR CALENDARIO
+    responsible = models.CharField(max_length=100, null=True, blank=True)
     effectiveness_assessment = models.TextField()  # OPCOES DE RESPOSTA (EFECTIVE, NOT EFFECTIVE)
     legal_requirements = models.ManyToManyField('LegalRequirementControl', related_name='legal_requirements')
     compliance_requirements = models.TextField()   
     observations = models.TextField()
-    created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='environ_and_social_risks')
+   # created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='environ_and_social_risks')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.activity
     class Meta:
-        verbose_name = 'FR.AS.002_Environmental and Social Risk and Impact Assessement'
-        verbose_name_plural = 'FR.AS.002_Environmental and Social Risks and Impact Assessements'
+        verbose_name = 'FR.AS.002 Environmental and Social Risk and Impact Assessement'
+        verbose_name_plural = 'FR.AS.002 Environmental and Social Risks and Impact Assessements'
 
 
 class LegalRequirementControl(models.Model):
@@ -111,8 +114,8 @@ class LegalRequirementControl(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     observation = models.TextField(null=True, blank=True)
-    law_file = models.FileField(upload_to=law_file_path, null=True, blank=True) 
-    created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='legal_requirements')
+    law_file = models.FileField(upload_to='documents/', null=True, blank=True) 
+    #created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='legal_requirements')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -121,7 +124,7 @@ class LegalRequirementControl(models.Model):
    
     
     class Meta:
-        verbose_name = 'FR.AS.003_Legal Requirement Control'
+        verbose_name = 'FR.AS.003 Legal Requirement Control'
         verbose_name_plural = 'Legal Requirements Control'
 
 
@@ -184,7 +187,7 @@ class EnvironmentalSocialScreening(models.Model):
     consultation_and_engagement = models.TextField(blank=True, null=True)
     recomended_actions = models.TextField(blank=True, null=True)
     screening_results = models.ForeignKey('ScreeningResult', on_delete=models.CASCADE, related_name='screening_results')
-    created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='risks_assessement')
+  #  created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='risks_assessement')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -328,7 +331,7 @@ class PreliminaryEnvironmentalInformation(models.Model):
     land_use = models.TextField(null=True, blank=True, choices=LandUse.choices)
     existing_infrastructure_around_activity_area = models.TextField(null=True, blank=True)
     total_investment_value = models.DecimalField(max_digits=15, decimal_places=2, null=True, blank=True)
-    created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='preliminar_infos')
+   # created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='preliminar_infos')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
