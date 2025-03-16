@@ -12,6 +12,26 @@ class CustomAdminSite(admin.AdminSite):
     def get_app_list(self, request):
         app_list = super().get_app_list(request)
 
+        app_names = {
+            "riskmanagement": "IDENTIFICATION OF RISKS AND IMPACTS",
+            "programsmanagement": "PROGRAMS MANAGEMENT",
+            "organizationalcapacityandcompetency": "ORGANIZATIONAL CAPACITY AND COMPETENCY",
+            "emergencyresponse": "EMERGENCY PREPAREDNESS AND RESPONSE",
+            "extcommungrievancemechanism": "EXTERNAL COMMUNICATIONS AND GRIEVANCE MECHANISMS",
+            "reportingmonitoringandreview": "MONITORING AND REVIEW",
+            "documentmanagement": "DOCUMENT MANAGEMENT",
+            "resourceefficiencyandpollutionprevention": "RESOURCE EFFICIENCY AND POLLUTION PREVENTION",
+            
+        }
+        
+
+        # Apply the custom app names
+        for app in app_list:
+            app_label = app['app_label']
+            if app_label in app_names:
+                app['name'] = app_names[app_label]
+
+
         app_ordering = {
             "riskmanagement": 1,
             "programsmanagement": 2,
